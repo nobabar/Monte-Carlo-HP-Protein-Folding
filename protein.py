@@ -53,3 +53,6 @@ class Protein(object):
         residue at the given index
         """
         return self.residues[index]
+
+    def __str__(self):
+        return self.sequence

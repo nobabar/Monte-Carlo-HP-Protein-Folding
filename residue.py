@@ -64,3 +64,6 @@ class Residue(object):
             tuple of coordinates
         """
         self.coordX, self.coordY = input_coords
+
+    def __str__(self):
+        return self.typeHP
