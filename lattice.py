@@ -20,8 +20,18 @@ class Lattice(object):
 
     Methods
     -------
-    fill_grid(protein)
+    place_residue(residue, coords):
+        Place a residue on the grid.
+    remove_residue(coords):
+        Remove a residue from the grid.
+    fill_grid(protein):
         Fill the grid with a random generated conformation.
+    is_empty(coords):
+        Check if the given coordinates are empty.
+    empty_neighbors(coords):
+        Return the empty neighbors of the given coordinates.
+    draw_grid():
+        Draw the lattice in the terminal.
     """
 
     def __init__(self, protein):
