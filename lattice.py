@@ -226,7 +226,7 @@ class Lattice(object):
             neighbors = self.occupied_neighbors(res.get_coords())
             for neighbor in neighbors:
                 if not res.is_consecutive(neighbor) and neighbor.typeHP == "H":
-                    energy += 1
+                    energy -= 1
         # don't count each bound twice
         return energy / 2
 
