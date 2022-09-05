@@ -1,3 +1,10 @@
+"""Create and manipulate lattices.
+
+Proteins are folded into lattices. The lattice is a grid of cells.
+Each cell can contain a residue or be empty. The grid is a square.
+"""
+
+
 import numpy as np
 
 from residue import Residue
@@ -18,8 +25,12 @@ class Lattice(object):
 
     Methods
     -------
+    get_residue(coords):
+        Return the residue at the given coordinates.
     place_residue(residue, coords):
         Place a residue on the grid.
+    move_residue(residue, coords):
+        Move a residue to the given coordinates.
     remove_residue(coords):
         Remove a residue from the grid.
     fill_grid(protein):
@@ -27,7 +38,14 @@ class Lattice(object):
     is_empty(coords):
         Check if the given coordinates are empty.
     empty_neighbors(coords):
-        Return the empty neighbors of the given coordinates.
+        Return the empty neighbors around a given coordinates.
+    occupied_neighbors(coords):
+        Return the occupied neighbors around a given coordinates.
+    calculate_energy():
+        Calculate the energy of the lattice.
+    calculate_energy_change(residue, coords):
+        Calculate the energy change change of the lattice
+        if a residue is moved to the given coordinates.
     draw_grid():
         Draw the lattice in the terminal.
     """

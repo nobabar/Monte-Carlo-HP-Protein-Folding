@@ -26,6 +26,8 @@ class Residue(object):
         Return the coordinates of the residue.
     set_coords(tuple):
         Set the coordinates of the residue.
+    is_consecutive(residue2):
+        Check if two residues are consecutive.
     """
 
     def __init__(self, input_index, input_type):

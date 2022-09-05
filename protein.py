@@ -24,6 +24,12 @@ class Protein(object):
     -------
     get_residue(index):
         Return the residue at the given index.
+    get_H_residues():
+        Return the list of hydrophobic residues.
+    get_neighbors(residue):
+        Return the neighbors of the given residue.
+    is_end(residue):
+        Check if the residue is at either end of the protein.
     """
 
     def __init__(self, sequence):
