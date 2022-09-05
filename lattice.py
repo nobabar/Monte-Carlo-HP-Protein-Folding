@@ -131,13 +131,14 @@ class Lattice(object):
             Protein to place on the grid.
         """
         if mode == "linear":
-            i = j = self.size // 2 - self.protein.length // 2
-            start_point = (i, j)
+            start_i = self.size // 2
+            start_j = self.size // 2 - self.protein.length // 2
+            start_point = (start_i, start_j)
             self.place_residue(self.protein.get_residue(0), start_point)
 
-            for index in range(1, self.protein.length):
+            for i in range(1, self.protein.length):
                 self.place_residue(
-                    self.protein.get_residue(index), (i, j + index))
+                    self.protein.get_residue(i), (start_i, start_j + i))
 
         elif mode == "random":
             # place the first residue in the middle of the grid
