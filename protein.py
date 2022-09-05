@@ -56,6 +56,16 @@ class Protein(object):
             raise IndexError("Index out of range")
         return self.residues[index]
 
+    def get_H_residues(self):
+        """
+        Return the list of hydrophobic residues.
+
+        Returns
+        -------
+        List of hydrophobic residues.
+        """
+        return [residue for residue in self.residues if residue.typeHP == "H"]
+
     def get_neighbors(self, residue):
         """
         Return the neighbors of the given residue.
@@ -76,6 +86,20 @@ class Protein(object):
         else:
             return [self.residues[residue.index - 1],
                     self.residues[residue.index + 1]]
+
+    def is_end(self, residue):
+        """Check if the residue is at the end of the protein.
+
+        Parameters
+        ----------
+        residue : Residue
+            Residue to check.
+
+        Returns
+        -------
+        True if the residue is at the end of the protein, False otherwise.
+        """
+        return residue.index == 0 or residue.index == self.length - 1
 
     def __str__(self):
         return self.sequence

@@ -65,5 +65,19 @@ class Residue(object):
         """
         self.coordX, self.coordY = input_coords
 
+    def is_consecutive(self, residue2):
+        """Check if two residues are consecutive.
+
+        Parameters
+        ----------
+        residue2 : Residue
+            Residue to check.
+
+        Returns
+        -------
+        True if the residues are consecutive, False otherwise.
+        """
+        return abs(self.index - residue2.index) == 1
+
     def __str__(self):
         return self.typeHP
