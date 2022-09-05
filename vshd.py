@@ -3,68 +3,53 @@ import copy
 import math
 
 
-class VHSD(object):
+def end_movement(lattice, residue):
     """
-    Class to compute VHSD mouvements
+    Compute end movement.
 
-    Attributes
+    Parameters
     ----------
     lattice : Lattice
-        Lattice containing the protein.
-    protein : Protein
-        Protein to move.
+        Lattice in which to make the movement.
+    residue : Residue
+        End residue to move.
     """
+    neighbor_residue = lattice.protein.get_neighbors(residue)
+    if neighbor_residue.length != 1:
+        raise ValueError(
+            "Residue isn't an end residue as it has not exactly one neighbor")
 
-    def __init__(self, input_lattice, input_protein):
-        """
-        Initialize the VHSD mouvements
+    empty_neighbors = lattice.empty_neighbors(neighbor_residue)
 
-        Parameters
-        ----------
-        input_lattice : Lattice
-            Lattice containing the protein.
-        input_protein : Protein
-            Protein to move.
-        """
-        self.lattice = copy.deepcopy(input_lattice)
-        self.protein = copy.deepcopy(input_protein)
-
-    def end_movement(self, input_residue):
-        """
-        Compute end movement.
-
-        Parameters
-        ----------
-        input_residue : Residue
-            End residue to move.
-        """
-        # don't manipulate the input_residu but own copy
-        residue = self.protein.get_residue(input_residue.index)
-
-        neighbor_residue = self.protein.get_neighbors(residue)
-        if neighbor_residue.length != 1:
-            raise ValueError(
-                "Residue isn't an end residue as it has not exactly one neighbor")
-
-        empty_neighbors = self.grid.empty_neighbors(neighbor_residue)
+    # if another position is available
+    if empty_neighbors:
         random_neighbor = np.random.choice(empty_neighbors)
-        self.lattice.place_residue(residue, random_neighbor)
+        return random_neighbor
+    else:
+        return None
 
-    def corner_movement(self, input_residue):
-        """
-        Compute corner movement.
+def corner_movement(lattice, residue):
+    """
+    Compute corner movement.
 
-        Parameters
-        ----------
-        input_residue : Residue
-            Corner residue to move.
-        """
-        # don't manipulate the input_residu but own copy
-        residue = self.protein.get_residue(input_residue.index)
+    Parameters
+    ----------
+    lattice : Lattice
+        Lattice in which to make the movement.
+    residue : Residue
+        Corner residue to move.
+    """
+    neighbors_residues = lattice.protein.get_neighbors(residue)
+    
+    # corner residues have exactly two neighbors
+    if neighbors_residues.length == 2:
+        neighbors_residues_coords = tuple(res.get_coords() for res in neighbors_residues)
 
-        neighbor_residue = self.protein.get_neighbors(residue)
-        if neighbor_residue.length != 2:
-            raise ValueError(
-                "Residue isn't a corner residue as it has not exactly two neighbors")
-
-        math.prod([abs(i - j) for i, j in zip(c, b)])
+        # check that the two neighbors form a corner
+        if math.prod([abs(i - j) for i, j in zip(*neighbors_residues_coords)]):
+            corner_position = tuple(abs(i + j) - k for i, j, k in zip(*neighbors_residues_coords, residue.get_coords()))
+            
+            # if the corner position is available
+            if lattice.is_empty(corner_position):
+                return corner_position
+    return None
