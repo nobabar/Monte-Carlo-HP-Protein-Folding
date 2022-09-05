@@ -52,7 +52,30 @@ class Protein(object):
         -------
         residue at the given index
         """
+        if index >= self.length or index < 0:
+            raise IndexError("Index out of range")
         return self.residues[index]
+
+    def get_neighbors(self, residue):
+        """
+        Return the neighbors of the given residue.
+
+        Parameters
+        ----------
+        residue : Residue
+            Residue to check.
+
+        Returns
+        -------
+        List of neighbors.
+        """
+        if residue.index == 0:
+            return [self.residues[1]]
+        elif residue.index == self.length - 1:
+            return [self.residues[-2]]
+        else:
+            return [self.residues[residue.index - 1],
+                    self.residues[residue.index + 1]]
 
     def __str__(self):
         return self.sequence

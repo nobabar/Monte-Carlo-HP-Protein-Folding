@@ -1,8 +1,6 @@
 import numpy as np
-import random
 
 from residue import Residue
-from protein import Protein
 
 
 class Lattice(object):
@@ -98,7 +96,7 @@ class Lattice(object):
                 coords = self.protein.get_residue(i - 1).get_coords()
                 i -= 1
             else:
-                random_neighbor = random.choice(empty_neighbors)
+                random_neighbor = np.random.choice(empty_neighbors)
                 self.place_residue(res, random_neighbor)
                 coords = random_neighbor
 
