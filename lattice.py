@@ -4,9 +4,10 @@ Proteins are folded into lattices. The lattice is a grid of cells.
 Each cell can contain a residue or be empty. The grid is a square.
 """
 
-
+# standard library
 import numpy as np
 
+# local
 from residue import Residue
 
 
@@ -37,10 +38,14 @@ class Lattice(object):
         Fill the grid with a random generated conformation.
     is_empty(coords):
         Check if the given coordinates are empty.
+    neighbors(coords):
+        Return the neighbors of the given coordinates.
     empty_neighbors(coords):
         Return the empty neighbors around a given coordinates.
     occupied_neighbors(coords):
         Return the occupied neighbors around a given coordinates.
+    are_neighbors(coords1, coords2):
+        Check if the given coordinates are neighbors.
     calculate_energy():
         Calculate the energy of the lattice.
     calculate_energy_change(residue, coords):
@@ -182,6 +187,30 @@ class Lattice(object):
         """
         return self.grid[coords] is None
 
+    def neighbors(self, coords):
+        """
+        Return the neighbors around a given coordinates.
+
+        Parameters
+        ----------
+        coords : tuple
+            Coordinates to check.
+
+        Returns
+        -------
+        List of the neighbors around the given coordinates.
+        """
+        neighbors = []
+        if coords[0] > 0:
+            neighbors.append((coords[0] - 1, coords[1]))
+        if coords[0] < self.size - 1:
+            neighbors.append((coords[0] + 1, coords[1]))
+        if coords[1] > 0:
+            neighbors.append((coords[0], coords[1] - 1))
+        if coords[1] < self.size - 1:
+            neighbors.append((coords[0], coords[1] + 1))
+        return neighbors
+
     def empty_neighbors(self, coords):
         """
         Return the empty neighbors around a given coordinates.
@@ -229,6 +258,23 @@ class Lattice(object):
         if coords[1] < self.size - 1:
             neighbors.append((coords[0], coords[1] + 1))
         return [self.get_residue(n) for n in neighbors if not self.is_empty(n)]
+
+    def are_neighbors(self, coords1, coords2):
+        """
+        Check if the given coordinates are neighbors.
+
+        Parameters
+        ----------
+        coords1 : tuple
+            Coordinates to check.
+        coords2 : tuple
+            Coordinates to check.
+
+        Returns
+        -------
+        True if the coordinates are neighbors, False otherwise.
+        """
+        return coords1 in self.neighbors(coords2) and coords2 in self.neighbors(coords1)
 
     def calculate_energy(self):
         """
