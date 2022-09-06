@@ -4,6 +4,10 @@ Simple class for handling proteins as chains of HP residues.
 See the `Residue` class for more information on HP residues.
 """
 
+# standard library
+import math
+
+# local
 from residue import Residue
 
 
@@ -26,10 +30,12 @@ class Protein(object):
         Return the residue at the given index.
     get_H_residues():
         Return the list of hydrophobic residues.
-    get_neighbors(residue):
+    get_consecutive(residue):
         Return the neighbors of the given residue.
     is_end(residue):
         Check if the residue is at either end of the protein.
+    is_corner(residue):
+        Check if the residue is in a corner of the protein.
     """
 
     def __init__(self, sequence):
@@ -72,7 +78,7 @@ class Protein(object):
         """
         return [residue for residue in self.residues if residue.typeHP == "H"]
 
-    def get_neighbors(self, residue):
+    def get_consecutive(self, residue):
         """
         Return the neighbors of the given residue.
 
@@ -106,6 +112,30 @@ class Protein(object):
         True if the residue is at the end of the protein, False otherwise.
         """
         return residue.index == 0 or residue.index == self.length - 1
+
+    def is_corner(self, residue):
+        """Check if the residue is in a corner of the protein.
+
+        Parameters
+        ----------
+        residue : Residue
+            Residue to check.
+
+        Returns
+        -------
+        True if the residue is in a corner of the protein, False otherwise.
+        """
+        neighbors_residues = self.get_consecutive(residue)
+
+        # corner residues have exactly two neighbors
+        if len(neighbors_residues) == 2:
+            neighbors_residues_coords = tuple(
+                res.get_coords() for res in neighbors_residues)
+
+            # check that the two neighbors form a corner
+            if math.prod([abs(i - j) for i, j in zip(*neighbors_residues_coords)]):
+                return True
+        return False
 
     def __str__(self):
         return self.sequence
