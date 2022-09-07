@@ -65,7 +65,7 @@ class Protein(object):
         residue at the given index
         """
         if index >= self.length or index < 0:
-            raise IndexError("Index out of range")
+            return None
         return self.residues[index]
 
     def get_H_residues(self):
