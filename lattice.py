@@ -328,7 +328,10 @@ class Lattice(object):
         Draw the lattice in the terminal
         """
         for i in range(self.size):
-            print("+---" * self.size + "+")
+            print(f"{i:^4}", end="")
+        print("")
+        for i in range(self.size):
+            print(f"{i:-<4}" + "+---" * (self.size - 1) + "+")
             for j in range(self.size):
                 if self.grid[i, j] is None:
                     print("|   ", end="")
