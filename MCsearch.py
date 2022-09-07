@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-import vshd
+from vshd import VSHD
 
 
 def MCsearch(nsteps, lattice_input, temperature):
@@ -36,23 +36,32 @@ def MCsearch(nsteps, lattice_input, temperature):
         residue = np.random.choice(lattice.protein.residues)
 
         # compute the movement
-        movement = None
+        movements = []
         if lattice.protein.is_end(residue):
-            movement = vshd.end_movement(lattice, residue)
+            movements.append(VSHD("end", lattice, residue))
         else:
-            movement = vshd.corner_movement(lattice, residue)
+            if lattice.protein.is_corner(residue):
+                movements.append(VSHD("corner", lattice, residue))
+            movements.append(VSHD("crankshaft", lattice, residue))
 
-        # if a movement is possible
-        if movement:
-            if residue.typeHP == "H":
-                # compute the new energy
-                new_energy = energy + \
-                    lattice.calculate_energy_change(residue, movement)
+        # filter movements
+        for movement in movements:
+            print(movement)
+        movements = [m for m in movements if None not in m.destinations]
+
+        for movement in movements:
+            for residue, destination in zip(movement.residues, movement.destinations):
+                if residue.typeHP == "H":
+                    # compute the new energy
+                    new_energy = new_energy + \
+                        lattice.calculate_energy_change(residue, destination)
+            
 
             # if the new energy is lower or if the Boltzmann condition is met
             if new_energy <= energy or np.random.random() < np.exp(-(new_energy - energy) / temperature):
                 # move the residue
-                lattice.move_residue(residue, movement)
+                for residue, destination in zip(movement.residues, movement.destinations):
+                    lattice.move_residue(residue, destination)
                 print(f"Iteration {i}, energy : {new_energy}")
                 lattice.draw_grid()
 
