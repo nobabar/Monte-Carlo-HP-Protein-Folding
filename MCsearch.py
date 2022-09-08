@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-from vshd import VSHD
+from movement import Movement
 
 
 def MCsearch(nsteps, lattice_input, temperature):
@@ -38,29 +38,39 @@ def MCsearch(nsteps, lattice_input, temperature):
         # compute the movement
         movements = []
         if lattice.protein.is_end(residue):
-            movements.append(VSHD("end", lattice, residue))
+            movements.append(Movement("end", lattice, residue))
         else:
             if lattice.protein.is_corner(residue):
-                movements.append(VSHD("corner", lattice, residue))
-            movements.append(VSHD("crankshaft", lattice, residue))
+                movements.append(Movement("corner", lattice, residue))
+            movements.append(Movement("crankshaft", lattice, residue))
+            movements.append(Movement("pull", lattice, residue))
 
         # filter movements
         for movement in movements:
             print(movement)
         movements = [m for m in movements if None not in m.destinations]
 
-        for movement in movements:
-            for residue, destination in zip(movement.residues, movement.destinations):
+        if movements:
+            random_movement = np.random.choice(movements)
+            print(random_movement)
+
+            for residue, destination in zip(
+                random_movement.residues, random_movement.destinations
+            ):
                 if residue.typeHP == "H":
                     # compute the new energy
-                    new_energy = new_energy + \
-                        lattice.calculate_energy_change(residue, destination)
-            
+                    new_energy = new_energy + lattice.calculate_energy_change(
+                        residue, destination
+                    )
 
             # if the new energy is lower or if the Boltzmann condition is met
-            if new_energy <= energy or np.random.random() < np.exp(-(new_energy - energy) / temperature):
+            if new_energy <= energy or np.random.random() < np.exp(
+                -(new_energy - energy) / temperature
+            ):
                 # move the residue
-                for residue, destination in zip(movement.residues, movement.destinations):
+                for residue, destination in zip(
+                    random_movement.residues, random_movement.destinations
+                ):
                     lattice.move_residue(residue, destination)
                 print(f"Iteration {i}, energy : {new_energy}")
                 lattice.draw_grid()
