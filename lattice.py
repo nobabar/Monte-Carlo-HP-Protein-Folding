@@ -5,7 +5,9 @@ Each cell can contain a residue or be empty. The grid is a square.
 """
 
 # standard library
+from copy import deepcopy
 import numpy as np
+import types
 
 # local
 from residue import Residue
@@ -323,6 +325,21 @@ class Lattice(object):
                 energy_change -= 1
         return energy_change
 
+    def is_valid(self):
+        """
+        Check if the lattice is valid.
+
+        Returns
+        -------
+        True if the lattice is valid, False otherwise.
+        """
+        residues = self.protein.residues
+        for index, res in enumerate(residues[1:]):
+            # if the residue is not in the neighbors of the previous one
+            if res not in self.occupied_neighbors(residues[index - 1].get_coords()):
+                return False
+        return True
+
     def draw_grid(self):
         """
         Draw the lattice in the terminal
@@ -339,3 +356,10 @@ class Lattice(object):
                     print("|" + f"{str(self.grid[i, j]):^3}", end="")
             print("|")
         print("+---" * self.size + "+")
+
+    def __deepcopy__(self, memo):
+        new_protein = deepcopy(self.protein, memo)
+        new_instance = Lattice(new_protein)
+        # edges_in, _out should contain references to the existing edges, not new objects
+        new_instance.grid = deepcopy(self.grid, memo)
+        return new_instance
