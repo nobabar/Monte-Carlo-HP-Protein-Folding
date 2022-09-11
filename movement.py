@@ -228,8 +228,8 @@ class Movement(object):
                         i_minus_2 = i_minus_1
                         i_minus_1 = next_residue.get_coords()
 
-                        # place the residue
-                        self.lattice.place_residue(next_residue, new_coords)
+                        # move the residue
+                        self.lattice.move_residue(next_residue, new_coords)
 
                         # check if the conformation is valid
                         if self.lattice.is_valid():

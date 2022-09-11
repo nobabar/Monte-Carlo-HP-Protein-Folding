@@ -360,6 +360,5 @@ class Lattice(object):
     def __deepcopy__(self, memo):
         new_protein = deepcopy(self.protein, memo)
         new_instance = Lattice(new_protein)
-        # edges_in, _out should contain references to the existing edges, not new objects
         new_instance.grid = deepcopy(self.grid, memo)
         return new_instance
