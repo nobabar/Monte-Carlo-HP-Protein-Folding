@@ -5,6 +5,7 @@ See the `Residue` class for more information on HP residues.
 """
 
 # standard library
+from copy import deepcopy
 import math
 
 # local
@@ -129,8 +130,8 @@ class Protein(object):
 
         # corner residues have exactly two neighbors
         if len(neighbors_residues) == 2:
-            neighbors_residues_coords = tuple(
-                res.get_coords() for res in neighbors_residues)
+            neighbors_residues_coords = [
+                res.get_coords() for res in neighbors_residues]
 
             # check that the two neighbors form a corner
             if math.prod([abs(i - j) for i, j in zip(*neighbors_residues_coords)]):
@@ -139,3 +140,9 @@ class Protein(object):
 
     def __str__(self):
         return self.sequence
+
+    def __deepcopy__(self, memo):
+        new_instance = Protein(self.sequence)
+        # edges_in, _out should contain references to the existing edges, not new objects
+        new_instance.residues = deepcopy(self.residues, memo)
+        return new_instance
