@@ -46,32 +46,21 @@ def MCsearch(nsteps, lattice_input, temperature):
             movements.append(Movement("pull", lattice, residue))
 
         # filter movements
-        for movement in movements:
-            print(movement)
-        movements = [m for m in movements if None not in m.destinations]
+        movements = [m for m in movements if m.moved]
 
         if movements:
             random_movement = np.random.choice(movements)
             print(random_movement)
 
-            for residue, destination in zip(
-                random_movement.residues, random_movement.destinations
-            ):
-                if residue.typeHP == "H":
-                    # compute the new energy
-                    new_energy = new_energy + lattice.calculate_energy_change(
-                        residue, destination
-                    )
+            new_energy = random_movement.lattice.calculate_energy()
 
             # if the new energy is lower or if the Boltzmann condition is met
             if new_energy <= energy or np.random.random() < np.exp(
                 -(new_energy - energy) / temperature
             ):
-                # move the residue
-                for residue, destination in zip(
-                    random_movement.residues, random_movement.destinations
-                ):
-                    lattice.move_residue(residue, destination)
+                # update the lattice
+                lattice = random_movement.lattice
+
                 print(f"Iteration {i}, energy : {new_energy}")
                 lattice.draw_grid()
 
