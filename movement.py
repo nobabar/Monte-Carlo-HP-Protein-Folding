@@ -77,12 +77,14 @@ class Movement(object):
         # end residues have exactly one neighbor
         if len(neighbor_residue) == 1:
             empty_neighbors = self.lattice.empty_neighbors(
-                neighbor_residue[0].get_coords())
+                neighbor_residue[0].get_coords()
+            )
 
             # if another position is available
             if empty_neighbors:
-                random_neighbor = empty_neighbors[np.random.choice(
-                    len(empty_neighbors))]
+                random_neighbor = empty_neighbors[
+                    np.random.choice(len(empty_neighbors))
+                ]
                 self.lattice.move_residue(self.residue, random_neighbor)
                 self.moved = True
 
@@ -103,8 +105,11 @@ class Movement(object):
             )
 
             corner_position = tuple(
-                abs(i + j) - k
-                for i, j, k in zip(*neighbors_residues_coords, self.residue.get_coords())
+                map(
+                    lambda a, b, c: abs(a + b) - c,
+                    *neighbors_residues_coords,
+                    self.residue.get_coords(),
+                )
             )
 
             # if the corner position is available
@@ -151,8 +156,8 @@ class Movement(object):
                         if self.lattice.are_neighbors(*corner_candidates_coords):
                             # new position of initial residue
                             new_position_i = tuple(
-                                (2 * (i - j)) + j
-                                for i, j in zip(
+                                map(
+                                    lambda a, b: (2 * (a - b)) + b,
                                     corner_candidates_coords[0],
                                     self.residue.get_coords(),
                                 )
@@ -164,20 +169,19 @@ class Movement(object):
                             )
                             # new position of the other residue
                             new_position_j = tuple(
-                                (2 * (i - j)) + j
-                                for i, j in zip(
+                                map(
+                                    lambda a, b: (2 * (a - b)) + b,
                                     corner_candidates_coords[1],
                                     other_residue.get_coords(),
                                 )
                             )
 
                             # if the new positions are available
-                            if self.lattice.is_empty(new_position_i) \
-                                    and self.lattice.is_empty(new_position_j):
-                                self.lattice.move_residue(self.residue,
-                                                          new_position_i)
-                                self.lattice.move_residue(other_residue,
-                                                          new_position_j)
+                            if self.lattice.is_empty(
+                                new_position_i
+                            ) and self.lattice.is_empty(new_position_j):
+                                self.lattice.move_residue(self.residue, new_position_i)
+                                self.lattice.move_residue(other_residue, new_position_j)
                                 moved = True
                                 return
 
@@ -197,9 +201,11 @@ class Movement(object):
                 # check the direction between start residue and neighbor
                 # invert that direction to get the new position of the start residue
                 side_direction = tuple(
-                    map(lambda a, b: 1 - abs(a - b),
+                    map(
+                        lambda a, b: 1 - abs(a - b),
                         self.residue.get_coords(),
-                        neighbor_plus_1.get_coords())
+                        neighbor_plus_1.get_coords(),
+                    )
                 )
 
                 # side positions to move to
@@ -219,7 +225,8 @@ class Movement(object):
                     # which way to head in the protein, either 1 or -1
                     direction = self.residue.index - neighbor_minus_1.index
                     next_residue = self.lattice.protein.get_residue(
-                        neighbor_minus_1.index + direction)
+                        neighbor_minus_1.index + direction
+                    )
 
                     # loop over residues in that direction
                     while next_residue is not None:
@@ -237,7 +244,8 @@ class Movement(object):
                             return
                         else:
                             next_residue = self.lattice.protein.get_residue(
-                                next_residue.index + direction)
+                                next_residue.index + direction
+                            )
 
     def __str__(self):
         return f"{self.type} movement of {self.residue}"
