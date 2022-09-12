@@ -42,7 +42,7 @@ def MCsearch(nsteps, lattice_input, temperature):
         else:
             if lattice.protein.is_corner(residue):
                 movements.append(Movement("corner", lattice, residue))
-            movements.append(Movement("crankshaft", lattice, residue))
+                movements.append(Movement("crankshaft", lattice, residue))
             movements.append(Movement("pull", lattice, residue))
 
         # filter movements
@@ -66,5 +66,4 @@ def MCsearch(nsteps, lattice_input, temperature):
 
                 # update the energy
                 energy = new_energy
-
     return lattice
