@@ -47,7 +47,7 @@ class Movement(object):
         """
         self.type = type
         self.lattice = copy.deepcopy(lattice)
-        self.residue = residue
+        self.residue = self.lattice.protein.get_residue(residue.index)
         self.moved = False
         self.move()
 
