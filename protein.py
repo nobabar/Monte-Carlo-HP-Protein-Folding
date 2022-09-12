@@ -97,8 +97,7 @@ class Protein(object):
         elif residue.index == self.length - 1:
             return [self.residues[-2]]
         else:
-            return [self.residues[residue.index - 1],
-                    self.residues[residue.index + 1]]
+            return [self.residues[residue.index - 1], self.residues[residue.index + 1]]
 
     def is_end(self, residue):
         """Check if the residue is at the end of the protein.
@@ -130,11 +129,10 @@ class Protein(object):
 
         # corner residues have exactly two neighbors
         if len(neighbors_residues) == 2:
-            neighbors_residues_coords = [
-                res.get_coords() for res in neighbors_residues]
+            neighbors_residues_coords = [res.get_coords() for res in neighbors_residues]
 
             # check that the two neighbors form a corner
-            if math.prod([abs(i - j) for i, j in zip(*neighbors_residues_coords)]):
+            if math.prod(map(lambda a, b: abs(a - b), *neighbors_residues_coords)) == 1:
                 return True
         return False
 
