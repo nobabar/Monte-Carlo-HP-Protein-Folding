@@ -140,7 +140,9 @@ class Protein(object):
         return self.sequence
 
     def __deepcopy__(self, memo):
-        new_instance = Protein(self.sequence)
-        # edges_in, _out should contain references to the existing edges, not new objects
-        new_instance.residues = deepcopy(self.residues, memo)
-        return new_instance
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result

@@ -144,8 +144,7 @@ class Lattice(object):
             self.place_residue(self.protein.get_residue(0), start_point)
 
             for i in range(1, self.protein.length):
-                self.place_residue(
-                    self.protein.get_residue(i), (start_i, start_j + i))
+                self.place_residue(self.protein.get_residue(i), (start_i, start_j + i))
 
         elif mode == "random":
             # place the first residue in the middle of the grid
@@ -161,7 +160,8 @@ class Lattice(object):
 
                 for dead_end in dead_ends:
                     empty_neighbors.remove(
-                        dead_end) if dead_end in empty_neighbors else None
+                        dead_end
+                    ) if dead_end in empty_neighbors else None
 
                 if len(empty_neighbors) == 0:
                     dead_ends.append(coords)
@@ -169,8 +169,9 @@ class Lattice(object):
                     coords = self.protein.get_residue(i - 1).get_coords()
                     i -= 1
                 else:
-                    random_neighbor = empty_neighbors[np.random.choice(
-                        len(empty_neighbors))]
+                    random_neighbor = empty_neighbors[
+                        np.random.choice(len(empty_neighbors))
+                    ]
                     self.place_residue(res, random_neighbor)
                     coords = random_neighbor
 
@@ -358,7 +359,9 @@ class Lattice(object):
         print("+---" * self.size + "+")
 
     def __deepcopy__(self, memo):
-        new_protein = deepcopy(self.protein, memo)
-        new_instance = Lattice(new_protein)
-        new_instance.grid = deepcopy(self.grid, memo)
-        return new_instance
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result

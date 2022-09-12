@@ -4,6 +4,8 @@ Simple class for handling HP residues. HP residues are a simplification of
 protein residues, classified as either hydrophobic (H) or polar (P).
 """
 
+from copy import deepcopy
+
 
 class Residue(object):
     """
@@ -54,7 +56,7 @@ class Residue(object):
         -------
         tuple of residue's coordinates
         """
-        return(self.coordX, self.coordY)
+        return (self.coordX, self.coordY)
 
     def set_coords(self, input_coords):
         """
@@ -80,6 +82,14 @@ class Residue(object):
         True if the residues are consecutive, False otherwise.
         """
         return abs(self.index - residue2.index) == 1
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            setattr(result, k, deepcopy(v, memo))
+        return result
 
     def __str__(self):
         return self.typeHP
