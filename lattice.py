@@ -296,7 +296,7 @@ class Lattice(object):
                 if not res.is_consecutive(neighbor) and neighbor.typeHP == "H":
                     energy -= 1
         # don't count each bound twice
-        return energy / 2
+        return int(energy / 2)
 
     def calculate_energy_change(self, residue, movement):
         """
