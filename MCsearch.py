@@ -4,13 +4,13 @@ import numpy as np
 from movement import Movement
 
 
-def MCsearch(nsteps, lattice_input, temperature):
+def MCsearch(n_steps, lattice_input, temperature):
     """
     Perform a Monte Carlo search of the lattice.
 
     Parameters
     ----------
-    nsteps : int
+    n_steps : int
         Number of steps to perform.
     lattice : Lattice
         Lattice on which to perform the search.
@@ -31,7 +31,7 @@ def MCsearch(nsteps, lattice_input, temperature):
     new_energy = energy
 
     # perform the search
-    for i in range(nsteps):
+    for i in range(n_steps):
         # choose a random residue
         residue = np.random.choice(lattice.protein.residues)
 
