@@ -27,11 +27,10 @@ def MCsearch(n_steps, temperature, lattice_input):
 
     # compute the initial energy
     energy = lattice.calculate_energy()
-    print(f"Initial energy: {energy}")
     new_energy = energy
 
     # perform the search
-    for i in range(n_steps):
+    for _ in range(n_steps):
         # choose a random residue
         residue = np.random.choice(lattice.protein.residues)
 
@@ -54,15 +53,18 @@ def MCsearch(n_steps, temperature, lattice_input):
 
             new_energy = random_movement.lattice.calculate_energy()
 
+            # Boltzmann constant
+            K_b = 0.0019872041
+
             # if the new energy is lower or if the Boltzmann condition is met
             if new_energy <= energy or np.random.random() < np.exp(
-                -(new_energy - energy) / temperature
+                -(new_energy - energy) / (temperature * K_b)
             ):
                 # update the lattice
                 lattice = random_movement.lattice
 
-                print(f"Iteration {i}, energy : {new_energy}")
-                lattice.draw_grid()
+                # print(f"Iteration {i}, energy : {new_energy}")
+                # lattice.draw_grid()
 
                 # update the energy
                 energy = new_energy

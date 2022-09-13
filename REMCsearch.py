@@ -47,10 +47,12 @@ def REMCsearch(
         while i < (n_replica - 1):
             j = i + 1
 
+            # Boltzmann constant
+            K_b = 0.0019872041
+
             # product of the energy difference and inverse temperature difference
-            delta = ((1 / temperatures[j]) - (1 / temperatures[i])) * (
-                lattices[i].calculate_energy() - lattices[j].calculate_energy()
-            )
+            delta = ((1 / (temperatures[j] * K_b)) - (1 / (temperatures[i] * K_b))) * (
+                lattices[i].calculate_energy() - lattices[j].calculate_energy())
 
             if delta <= 0 or np.random.random() <= np.exp(-delta):
                 lattices[i], lattices[j] = lattices[j], lattices[i]
