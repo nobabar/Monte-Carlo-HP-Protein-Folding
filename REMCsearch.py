@@ -5,7 +5,9 @@ from MCsearch import MCsearch
 from movement import Movement
 
 
-def REMCsearch(n_replica, energy_cutoff, n_local_steps, t_min, t_max, lattice_input):
+def REMCsearch(
+    n_replica, energy_cutoff, max_steps, n_local_steps, t_min, t_max, lattice_input
+):
     """
     Perform a Replica Exchange Monte Carlo search on the lattice.
 
@@ -29,7 +31,8 @@ def REMCsearch(n_replica, energy_cutoff, n_local_steps, t_min, t_max, lattice_in
     temperatures = np.linspace(t_min, t_max, n_replica)
     offset = 0
     energy = 0
-    while energy > energy_cutoff:
+    step = 0
+    while energy > energy_cutoff and step < max_steps:
         for replica in range(n_replica):
             lattice = MCsearch(n_local_steps, lattices[replica], temperatures[replica])
             if lattice.calculate_energy() < lattices[replica].calculate_energy():
@@ -52,5 +55,6 @@ def REMCsearch(n_replica, energy_cutoff, n_local_steps, t_min, t_max, lattice_in
                 lattices[i], lattices[j] = lattices[j], lattices[i]
             i += 2
         offset = 1 - offset
+        step += 1
     # return the lattice with the lowest energy
     return min(lattices, key=lambda x: x.calculate_energy())
