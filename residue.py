@@ -17,9 +17,9 @@ class Residue(object):
         index of the residu in the sequence
     typeHP : char
         type of the residu ; Hydrophobic (H) or Polar (P)
-    coordX : int
+    coordI : int
         x coordinate of the residue
-    coordY : int
+    coordJ : int
         y coordinate of the residue
 
     Methods
@@ -45,8 +45,8 @@ class Residue(object):
         """
         self.index = input_index
         self.typeHP = input_type
-        self.coordX = None
-        self.coordY = None
+        self.coordI = None
+        self.coordJ = None
 
     def get_coords(self):
         """
@@ -56,7 +56,7 @@ class Residue(object):
         -------
         tuple of residue's coordinates
         """
-        return (self.coordX, self.coordY)
+        return (self.coordI, self.coordJ)
 
     def set_coords(self, input_coords):
         """
@@ -67,7 +67,7 @@ class Residue(object):
         input_coords : tuple
             tuple of coordinates
         """
-        self.coordX, self.coordY = input_coords
+        self.coordI, self.coordJ = input_coords
 
     def is_consecutive(self, residue2):
         """Check if two residues are consecutive.
