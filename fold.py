@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 
 from protein import Protein
@@ -12,19 +10,30 @@ from parser import parse_args
 def main(args):
     args = parse_args(args)
 
-    print(args)
+    if args.protein:
+        protein = Protein(args.protein)
+    elif args.file:
+        with open(args.file, "r") as f:
+            protein = Protein(f.read())
+    del args.protein, args.file
 
-    # protein = Protein("PHPPHPHPHPPHPPHPPHPHPPHPPHPHPPHP")
-    # lattice = Lattice(protein, "random")
+    lattice = Lattice(protein, args.initial_lattice)
+    del args.initial_lattice
 
     # print(f"Initial lattice with energy of {lattice.calculate_energy()}")
     # lattice.draw_grid()
 
-    # # lattice = MCsearch(5000, lattice, 500)
-    # lattice = REMCsearch(5, -5, 500, 100, 160, 220, lattice)
+    sub_command = args.subparser_name
+    del args.subparser_name
+
+    print(args)
+    if sub_command == "MC":
+        final_lattice = MCsearch(**vars(args), lattice_input=lattice)
+    elif sub_command == "REMC":
+        final_lattice = REMCsearch(**vars(args), lattice_input=lattice)
 
     # print(f"Final lattice with energy of {lattice.calculate_energy()}")
-    # lattice.draw_grid()
+    # final_lattice.draw_grid()
 
 
 if __name__ == "__main__":
