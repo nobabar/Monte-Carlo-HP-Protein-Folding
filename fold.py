@@ -14,9 +14,13 @@ def main(args):
         sequence = args.protein
     elif args.file:
         with open(args.file, "r") as handle:
+            sequence = ""
             # read fasta file without header
-            sequence = "".join([line.strip()
-                               for line in handle.readlines()[1:]])
+            for line in handle:
+                if line.startswith(">"):
+                    continue
+                else:
+                    sequence += line.strip()
     del args.protein, args.file
 
     # if sequence is not an HP sequence, convert it
