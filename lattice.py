@@ -345,18 +345,26 @@ class Lattice(object):
         """
         Draw the lattice in the terminal
         """
-        for i in range(self.size):
+        i_coords = [res.coordI for res in self.protein.residues]
+        i_max = max(i_coords) + 2
+        i_min = min(i_coords) - 1
+
+        j_coords = [res.coordJ for res in self.protein.residues]
+        j_max = max(j_coords) + 2
+        j_min = min(j_coords) - 1
+
+        for i in range((j_max - j_min)):
             print(f"{i:^4}", end="")
         print("")
-        for i in range(self.size):
-            print(f"{i:-<4}" + "+---" * (self.size - 1) + "+")
-            for j in range(self.size):
+        for i in range(i_min, i_max):
+            print(f"{i-i_min:-<4}" + "+---" * (j_max - j_min - 1) + "+")
+            for j in range(j_min, j_max):
                 if self.grid[i, j] is None:
                     print("|   ", end="")
                 else:
                     print("|" + f"{str(self.grid[i, j]):^3}", end="")
             print("|")
-        print("+---" * self.size + "+")
+        print("+---" * (j_max - j_min) + "+")
 
     def __deepcopy__(self, memo):
         cls = self.__class__
