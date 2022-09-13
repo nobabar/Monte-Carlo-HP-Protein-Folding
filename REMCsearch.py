@@ -42,7 +42,7 @@ def REMCsearch(
         if min([l.calculate_energy() for l in lattices]) < energy_cutoff:
             break
 
-        i = offset + 1
+        i = offset
         while i < (n_replica - 1):
             j = i + 1
 
