@@ -4,7 +4,7 @@ import numpy as np
 from movement import Movement
 
 
-def MCsearch(n_steps, lattice_input, temperature):
+def MCsearch(n_steps, temperature, lattice_input):
     """
     Perform a Monte Carlo search of the lattice.
 
