@@ -11,17 +11,25 @@ def main(args):
     args = parse_args(args)
 
     if args.protein:
-        protein = Protein(args.protein)
+        sequence = args.protein
     elif args.file:
-        with open(args.file, "r") as f:
-            protein = Protein(f.read())
+        with open(args.file, "r") as handle:
+            # read fasta file without header
+            sequence = "".join([line.strip()
+                               for line in handle.readlines()[1:]])
     del args.protein, args.file
+
+    # if sequence is not an HP sequence, convert it
+    if sequence.strip("HP"):
+        sequence = "".join(
+            'H' if r in 'AILMFVPGWC' else 'P' for r in sequence)
+    protein = Protein(sequence)
 
     lattice = Lattice(protein, args.initial_lattice)
     del args.initial_lattice
 
-    # print(f"Initial lattice with energy of {lattice.calculate_energy()}")
-    # lattice.draw_grid()
+    print(f"Initial lattice with energy of {lattice.calculate_energy()}")
+    lattice.draw_grid()
 
     sub_command = args.subparser_name
     del args.subparser_name
@@ -32,8 +40,8 @@ def main(args):
     elif sub_command == "REMC":
         final_lattice = REMCsearch(**vars(args), lattice_input=lattice)
 
-    # print(f"Final lattice with energy of {lattice.calculate_energy()}")
-    # final_lattice.draw_grid()
+    print(f"Final lattice with energy of {lattice.calculate_energy()}")
+    final_lattice.draw_grid()
 
 
 if __name__ == "__main__":
