@@ -15,8 +15,8 @@ class Movement(object):
         Lattice in which to make the movement.
     residue : Residue
         Residue to move.
-    destination : tuple
-        destination of the residue.
+    moved : bool
+        Whether the residue has been moved.
 
     Methods
     -------
