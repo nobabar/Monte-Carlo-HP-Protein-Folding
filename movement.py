@@ -3,13 +3,13 @@ import numpy as np
 from operator import add
 
 
-class Movement(object):
+class Movement():
     """
     Move residue in the lattice.
 
     Attributes
     ----------
-    type : str
+    movement_type : str
         Type of movement.
     lattice : Lattice
         Lattice in which to make the movement.
@@ -32,20 +32,20 @@ class Movement(object):
         Compute pull movement.
     """
 
-    def __init__(self, type, lattice, residue):
+    def __init__(self, movement_type, lattice, residue):
         """
         Initialize a movement.
 
         Parameters
         ----------
-        type : str
+        movement_type : str
             Type of movement.
         lattice : Lattice
             Lattice in which to make the movement.
         residue : Residue
             Residue to move.
         """
-        self.type = type
+        self.movement_type = movement_type
         self.lattice = copy.deepcopy(lattice)
         self.residue = self.lattice.protein.get_residue(residue.index)
         self.moved = False
@@ -55,13 +55,13 @@ class Movement(object):
         """
         Compute movement.
         """
-        if self.type == "end":
+        if self.movement_type == "end":
             self.end_movement()
-        elif self.type == "corner":
+        elif self.movement_type == "corner":
             self.corner_movement()
-        elif self.type == "crankshaft":
+        elif self.movement_type == "crankshaft":
             self.crankshaft_movement()
-        elif self.type == "pull":
+        elif self.movement_type == "pull":
             self.pull_movement()
 
     def end_movement(self):
@@ -142,12 +142,8 @@ class Movement(object):
                 ]
 
                 if not None in corner_candidates:
-                    if all(
-                        [
-                            self.lattice.protein.is_corner(candidate)
-                            for candidate in corner_candidates
-                        ]
-                    ):
+                    if all(self.lattice.protein.is_corner(candidate)
+                            for candidate in corner_candidates):
                         corner_candidates_coords = tuple(
                             res.get_coords() for res in corner_candidates
                         )
@@ -180,9 +176,11 @@ class Movement(object):
                             if self.lattice.is_empty(
                                 new_position_i
                             ) and self.lattice.is_empty(new_position_j):
-                                self.lattice.move_residue(self.residue, new_position_i)
-                                self.lattice.move_residue(other_residue, new_position_j)
-                                moved = True
+                                self.lattice.move_residue(
+                                    self.residue, new_position_i)
+                                self.lattice.move_residue(
+                                    other_residue, new_position_j)
+                                self.moved = True
                                 return
 
     def pull_movement(self):
@@ -240,7 +238,7 @@ class Movement(object):
 
                         # check if the conformation is valid
                         if self.lattice.is_valid():
-                            moved = True
+                            self.moved = True
                             return
                         else:
                             next_residue = self.lattice.protein.get_residue(
@@ -248,4 +246,4 @@ class Movement(object):
                             )
 
     def __str__(self):
-        return f"{self.type} movement of {self.residue}"
+        return f"{self.movement_type} movement of {self.residue}"

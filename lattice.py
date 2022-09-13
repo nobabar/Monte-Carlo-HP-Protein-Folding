@@ -7,13 +7,12 @@ Each cell can contain a residue or be empty. The grid is a square.
 # standard library
 from copy import deepcopy
 import numpy as np
-import types
 
 # local
 from residue import Residue
 
 
-class Lattice(object):
+class Lattice():
     """
     Lattice grid to restrict residue placement.
 
@@ -144,7 +143,8 @@ class Lattice(object):
             self.place_residue(self.protein.get_residue(0), start_point)
 
             for i in range(1, self.protein.length):
-                self.place_residue(self.protein.get_residue(i), (start_i, start_j + i))
+                self.place_residue(self.protein.get_residue(i),
+                                   (start_i, start_j + i))
 
         elif mode == "random":
             # place the first residue in the middle of the grid
@@ -370,6 +370,6 @@ class Lattice(object):
         cls = self.__class__
         result = cls.__new__(cls)
         memo[id(self)] = result
-        for k, v in self.__dict__.items():
-            setattr(result, k, deepcopy(v, memo))
+        for key, value in self.__dict__.items():
+            setattr(result, key, deepcopy(value, memo))
         return result

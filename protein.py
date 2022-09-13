@@ -12,7 +12,7 @@ import math
 from residue import Residue
 
 
-class Protein(object):
+class Protein():
     """
     Create and manipulate proteins as chains of residues.
 
@@ -111,7 +111,7 @@ class Protein(object):
         -------
         True if the residue is at the end of the protein, False otherwise.
         """
-        return residue.index == 0 or residue.index == self.length - 1
+        return residue.index in (0, self.length - 1)
 
     def is_corner(self, residue):
         """Check if the residue is in a corner of the protein.
@@ -129,7 +129,8 @@ class Protein(object):
 
         # corner residues have exactly two neighbors
         if len(neighbors_residues) == 2:
-            neighbors_residues_coords = [res.get_coords() for res in neighbors_residues]
+            neighbors_residues_coords = [
+                res.get_coords() for res in neighbors_residues]
 
             # check that the two neighbors form a corner
             if math.prod(map(lambda a, b: abs(a - b), *neighbors_residues_coords)) == 1:
@@ -143,6 +144,6 @@ class Protein(object):
         cls = self.__class__
         result = cls.__new__(cls)
         memo[id(self)] = result
-        for k, v in self.__dict__.items():
-            setattr(result, k, deepcopy(v, memo))
+        for key, value in self.__dict__.items():
+            setattr(result, key, deepcopy(value, memo))
         return result

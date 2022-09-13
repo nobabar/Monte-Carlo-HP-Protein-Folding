@@ -8,7 +8,7 @@ lattice = Lattice(protein, "linear")
 print(f"Initial lattice with energy of {lattice.calculate_energy()}")
 lattice.draw_grid()
 
-lattice = MCsearch(1000, lattice, 300)
+lattice = MCsearch(1000, 300, lattice)
 
 print(f"Final lattice with energy of {lattice.calculate_energy()}")
 lattice.draw_grid()

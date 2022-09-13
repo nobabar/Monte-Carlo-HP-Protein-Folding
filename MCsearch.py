@@ -49,8 +49,6 @@ def MCsearch(n_steps, temperature, lattice_input):
 
         if movements:
             random_movement = np.random.choice(movements)
-            print(random_movement)
-
             new_energy = random_movement.lattice.calculate_energy()
 
             # Boltzmann constant

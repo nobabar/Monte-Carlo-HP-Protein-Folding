@@ -2,11 +2,18 @@ import argparse
 
 
 class MyArgumentParser(argparse.ArgumentParser):
+    """
+    Parser class to override the help message
+    """
+
     def __innit__(self, *args, **kwargs):
         super().__innit__(self, *args, **kwargs)
 
-    # override the help message
-    def print_help(self):
+    def print_help(self, file=None):
+        """
+        Print main help message and subparsers help message together.
+        Override the default help message.
+        """
         # show main help
         help_text = self.format_help() + "\n"
 

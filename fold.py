@@ -34,7 +34,6 @@ def main(args):
     sub_command = args.subparser_name
     del args.subparser_name
 
-    print(args)
     if sub_command == "MC":
         final_lattice = MCsearch(**vars(args), lattice_input=lattice)
     elif sub_command == "REMC":

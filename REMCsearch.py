@@ -2,11 +2,10 @@ import copy
 import numpy as np
 from MCsearch import MCsearch
 
-from movement import Movement
-
 
 def REMCsearch(
-    n_replica, energy_cutoff, max_steps, local_steps, temperature_min, temperature_max, lattice_input
+    n_replica, energy_cutoff, max_steps, local_steps,
+    temperature_min, temperature_max, lattice_input
 ):
     """
     Perform a Replica Exchange Monte Carlo search on the lattice.
