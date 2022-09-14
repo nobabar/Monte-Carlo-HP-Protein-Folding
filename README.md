@@ -1,4 +1,4 @@
-# Monte-Carlo algorithm for protein folding in the HP model
+# Monte Carlo algorithm for protein folding in the HP model
 
 ## Setup your environment
 
@@ -39,8 +39,8 @@ python fold.py [-h] (-p PROTEIN | -f FILE) [-i {linear,random}] {MC,REMC} ...
 | positional arguments |                                               |
 | -------------------- | --------------------------------------------- |
 | {MC,REMC}            | The algorithm to use.                         |
-|                      | MC: Monte-Carlo algorithm.                    |
-|                      | REMC: Replica Exchange Monte-Carlo algorithm. |
+|                      | MC: Monte Carlo algorithm.                    |
+|                      | REMC: Replica Exchange Monte Carlo algorithm. |
 
 | options                                    |                                            |
 | ------------------------------------------ | ------------------------------------------ |
@@ -79,13 +79,13 @@ python fold.py [-h] (-p PROTEIN | -f FILE) [-i {linear,random}] {MC,REMC} ...
 
 ## Usage examples
 
-### Monte-Carlo algorithm
+### Monte Carlo algorithm
 
 ```bash
 python fold.py -f data/1AF5.fasta -i random MC -n 5000 200
 ```
 
-### Replica Exchange Monte-Carlo algorithm
+### Replica Exchange Monte Carlo algorithm
 
 ```bash
 python fold.py -p HPHPPHHPHPPHPHHPPHPH REMC -n 5 -e -9
@@ -93,16 +93,16 @@ python fold.py -p HPHPPHHPHPPHPHHPPHPH REMC -n 5 -e -9
 
 ## Benchmark proteins
 
-| Len | E^\* | Protein Sequence                                                                                     |
-| --- | ---- | ---------------------------------------------------------------------------------------------------- |
-| 20  | -9   | HPHPPHHPHPPHPHHPPHPH                                                                                 |
-| 24  | -9   | HHPPHPPHPPHPPHPPHPPHPPHH                                                                             |
-| 25  | -8   | PPHPPHHPPPPHHPPPPHHPPPPHH                                                                            |
-| 36  | -14  | PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP                                                                 |
-| 48  | -23  | PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPPPHHPPHHHPPHHHHH                                                     |
-| 51  | -21  | HHPHPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHPHHHHHPHPHPHH                                                  |
-| 60  | -36  | PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHP                                         |
-| 64  | -42  | HHHHHHHHHHHHPHPHPPHHPPHHPPHPPHHPPHHPPHPPHHPPHHPPHPHPHHHHHHHHHHHH                                     |
-| 85  | -53  | HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH                |
-| 100 | -50  | PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH |
-| 100 | -48  | PPPPPPHPHHPPPPPHHHPHHHHHPHHPPPPHHPPHHPHHHHHPHHHHHHHHHHPHHPHHHHHHHPPPPPPPPPPPHHHHHHHPPHPHHHPPPPPPHPHH |
+| ID  | Len | E^\* | Protein Sequence                                                                                     |
+| --- | --- | ---- | ---------------------------------------------------------------------------------------------------- |
+| S1  | 20  | -9   | HPHPPHHPHPPHPHHPPHPH                                                                                 |
+| S2  | 24  | -9   | HHPPHPPHPPHPPHPPHPPHPPHH                                                                             |
+| S3  | 25  | -8   | PPHPPHHPPPPHHPPPPHHPPPPHH                                                                            |
+| S4  | 36  | -14  | PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP                                                                 |
+| S5  | 48  | -23  | PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPPPHHPPHHHPPHHHHH                                                     |
+| S6  | 51  | -21  | HHPHPHPHPHHHHPHPPPHPPPHPPPPHPPPHPPPHPHPHHHHHPHPHPHH                                                  |
+| S7  | 60  | -36  | PPHHHPHHHHHHHHPPPHHHHHHHHHHPHPPPHHHHHHHHHHHHPPPPHHHHHHPHHPHP                                         |
+| S8  | 64  | -42  | HHHHHHHHHHHHPHPHPPHHPPHHPPHPPHHPPHHPPHPPHHPPHHPPHPHPHHHHHHHHHHHH                                     |
+| S9  | 85  | -53  | HHHHPPPPHHHHHHHHHHHHPPPPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHHHHHHHHHHHHPPPHPPHHPPHHPPHPH                |
+| S10 | 100 | -50  | PPPHHPPHHHHPPHHHPHHPHHPHHHHPPPPPPPPHHHHHHPPHHHHHHPPPPPPPPPHPHHPHHHHHHHHHHHPPHHHPHHPHPPHPHHHPPPPPPHHH |
+| S11 | 100 | -48  | PPPPPPHPHHPPPPPHHHPHHHHHPHHPPPPHHPPHHPHHHHHPHHHHHHHHHHPHHPHHHHHHHPPPPPPPPPPPHHHHHHHPPHPHHHPPPPPPHPHH |
