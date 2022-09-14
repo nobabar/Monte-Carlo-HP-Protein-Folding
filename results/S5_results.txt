@@ -1,3 +1,13 @@
-Running test case:  with optimal energy: 
-Running REMC with parameters: n-replica=5, energy-cutoff=, max-steps=1000, local-steps=100, temperature-min=160, temperature-max=220
-python fold.py -p REMC -n 5 -e -m 1000 -l 100 -tmin 160 -tmax 220
+Running test case: PPHPPHHPPHHPPPPPHHHHHHHHHHPPPPPPPPHHPPHHHPPHHHHH with optimal energy: -23
+Running MC with parameters: n-steps=5000, temperature=200
+Final lattice with energy of -1
++-------------------------------------------+
+|                                           |
+|                                       HH  |
+|                  HHHHPPPPPPPPHHPPHHHPPHHH |
+|    HH HPPPPPHHHHHH                        |
+| PHPPPPH                                   |
+| P                                         |
+|                                           |
++-------------------------------------------+
+Running REMC with parameters: n-replica=5, energy-cutoff=-23, max-steps=500, local-steps=100, temperature-min=160, temperature-max=220
