@@ -7,13 +7,12 @@ See the `Residue` class for more information on HP residues.
 # standard library
 from copy import deepcopy
 import math
-from sqlite3 import connect
 
 # local
 from residue import Residue
 
 
-class Protein():
+class Protein:
     """
     Create and manipulate proteins as chains of residues.
 
@@ -130,8 +129,7 @@ class Protein():
 
         # corner residues have exactly two neighbors
         if len(neighbors_residues) == 2:
-            neighbors_residues_coords = [
-                res.get_coords() for res in neighbors_residues]
+            neighbors_residues_coords = [res.get_coords() for res in neighbors_residues]
 
             # check that the two neighbors form a corner
             if math.prod(map(lambda a, b: abs(a - b), *neighbors_residues_coords)) == 1:
@@ -148,14 +146,15 @@ class Protein():
             Name of the PDB file to write.
         """
         with open(filename, "w") as handle:
-            atom = ''
-            connect = ''
+            atom = ""
+            connect = ""
             for i, residue in enumerate(self.residues):
-                atom += (f"ATOM  {i:>5}{'C' if residue.typeHP == 'H' else 'O':>4}"
-                         f" ACY A {i:>3} {residue.coordI:8.3f}{residue.coordJ:8.3f}{0:8.3f}"
-                         f"  1.00  0.00           {'C' if residue.typeHP == 'H' else 'O'}  \n"
-                         )
-                connect += (f"CONECT{i:>5}{((i+1) % self.length):>5}\n")
+                atom += (
+                    f"ATOM  {i:>5}{'C' if residue.typeHP == 'H' else 'O':>4}"
+                    f" ACY A {i:>3} {residue.coordI:8.3f}{residue.coordJ:8.3f}{0:8.3f}"
+                    f"  1.00  0.00           {'C' if residue.typeHP == 'H' else 'O'}  \n"
+                )
+                connect += f"CONECT{i:>5}{((i+1) % self.length):>5}\n"
             handle.write(atom)
             handle.write(connect)
             handle.write("END\n")

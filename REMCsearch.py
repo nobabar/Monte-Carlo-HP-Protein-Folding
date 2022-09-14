@@ -1,11 +1,17 @@
 import copy
 import numpy as np
+
 from MCsearch import MCsearch
 
 
 def REMCsearch(
-    n_replica, energy_cutoff, max_steps, local_steps,
-    temperature_min, temperature_max, lattice_input
+    n_replica,
+    energy_cutoff,
+    max_steps,
+    local_steps,
+    temperature_min,
+    temperature_max,
+    lattice_input,
 ):
     """
     Perform a Replica Exchange Monte Carlo search on the lattice.
@@ -33,8 +39,7 @@ def REMCsearch(
     step = 0
     while energy > energy_cutoff and step < max_steps:
         for replica in range(n_replica):
-            lattice = MCsearch(
-                local_steps, temperatures[replica], lattices[replica])
+            lattice = MCsearch(local_steps, temperatures[replica], lattices[replica])
             if lattice.calculate_energy() < lattices[replica].calculate_energy():
                 lattices[replica] = lattice
 
@@ -51,7 +56,8 @@ def REMCsearch(
 
             # product of the energy difference and inverse temperature difference
             delta = ((1 / (temperatures[j] * K_b)) - (1 / (temperatures[i] * K_b))) * (
-                lattices[i].calculate_energy() - lattices[j].calculate_energy())
+                lattices[i].calculate_energy() - lattices[j].calculate_energy()
+            )
 
             if delta <= 0 or np.random.random() <= np.exp(-delta):
                 lattices[i], lattices[j] = lattices[j], lattices[i]

@@ -7,7 +7,7 @@ protein residues, classified as either hydrophobic (H) or polar (P).
 from copy import deepcopy
 
 
-class Residue():
+class Residue:
     """
     Create and manipulate residues.
 

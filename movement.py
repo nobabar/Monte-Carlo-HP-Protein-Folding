@@ -3,7 +3,7 @@ import numpy as np
 from operator import add
 
 
-class Movement():
+class Movement:
     """
     Move residue in the lattice.
 
@@ -142,8 +142,10 @@ class Movement():
                 ]
 
                 if not None in corner_candidates:
-                    if all(self.lattice.protein.is_corner(candidate)
-                            for candidate in corner_candidates):
+                    if all(
+                        self.lattice.protein.is_corner(candidate)
+                        for candidate in corner_candidates
+                    ):
                         corner_candidates_coords = tuple(
                             res.get_coords() for res in corner_candidates
                         )
@@ -176,10 +178,8 @@ class Movement():
                             if self.lattice.is_empty(
                                 new_position_i
                             ) and self.lattice.is_empty(new_position_j):
-                                self.lattice.move_residue(
-                                    self.residue, new_position_i)
-                                self.lattice.move_residue(
-                                    other_residue, new_position_j)
+                                self.lattice.move_residue(self.residue, new_position_i)
+                                self.lattice.move_residue(other_residue, new_position_j)
                                 self.moved = True
                                 return
 

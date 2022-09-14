@@ -12,7 +12,7 @@ import numpy as np
 from residue import Residue
 
 
-class Lattice():
+class Lattice:
     """
     Lattice grid to restrict residue placement.
 
@@ -143,8 +143,7 @@ class Lattice():
             self.place_residue(self.protein.get_residue(0), start_point)
 
             for i in range(1, self.protein.length):
-                self.place_residue(self.protein.get_residue(i),
-                                   (start_i, start_j + i))
+                self.place_residue(self.protein.get_residue(i), (start_i, start_j + i))
 
         elif mode == "random":
             # place the first residue in the middle of the grid
