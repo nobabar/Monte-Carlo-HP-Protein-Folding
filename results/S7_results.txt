@@ -1,0 +1,3 @@
+Running test case:  with optimal energy: 
+Running REMC with parameters: n-replica=5, energy-cutoff=, max-steps=1000, local-steps=100, temperature-min=160, temperature-max=220
+python fold.py -p REMC -n 5 -e -m 1000 -l 100 -tmin 160 -tmax 220

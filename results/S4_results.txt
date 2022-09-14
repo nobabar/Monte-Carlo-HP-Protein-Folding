@@ -1,0 +1,21 @@
+Running test case: PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP with optimal energy: -14
+Running MC with parameters: n-steps=1000, temperature=200
+Final lattice with energy of -1
++------------------------------+
+|                              |
+|                          HPP |
+| PP                    HHPP   |
+| P                     P      |
+| HHHHPPPPPHHHHHHHPPHHPPP      |
+|  PP                          |
+|                              |
++------------------------------+
+Running REMC with parameters: n-replica=5, energy-cutoff=-14, max-steps=1000, local-steps=100, temperature-min=160, temperature-max=220
+Final lattice with energy of -1
++-----------------------------------+
+|                                   |
+|                               PP  |
+| PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHHP |
+|                                 P |
+|                                   |
++-----------------------------------+
