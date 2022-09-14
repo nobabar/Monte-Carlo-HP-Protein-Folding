@@ -44,7 +44,7 @@ def main(args):
     elif sub_command == "REMC":
         final_lattice = REMCsearch(**vars(args), lattice_input=lattice)
 
-    print(f"Final lattice with energy of {lattice.calculate_energy()}")
+    print(f"Final lattice with energy of {final_lattice.calculate_energy()}")
     final_lattice.draw_grid()
 
     # final_lattice.protein.write_pdb("../results/final_lattice.pdb")
