@@ -17,8 +17,8 @@ EnergyArray=(-9 -9 -8 -14 -23 -21 -36 -42 -53 -50 -48)
 for i in "${!ProteinArray[@]}"; do
     exec 1>results/S$(($i+1))_results.txt
     echo "Running test case: ${ProteinArray[$i]} with optimal energy: ${EnergyArray[$i]}"
-    echo "Running MC with parameters: n-steps=1000, temperature=200"
-    python fold.py -p ${ProteinArray[$i]} MC -n 1000 -t 200
+    echo "Running MC with parameters: n-steps=5000, temperature=200"
+    python fold.py -p ${ProteinArray[$i]} MC -n 5000 -t 200
     echo "Running REMC with parameters: n-replica=5, energy-cutoff=${EnergyArray[$i]}, max-steps=1000, local-steps=100, temperature-min=160, temperature-max=220"
-    python fold.py -p ${ProteinArray[$i]} REMC -n 5 -e ${EnergyArray[$i]} -m 1000 -l 100 -tmin 160 -tmax 220
+    python fold.py -p ${ProteinArray[$i]} REMC -n 5 -e ${EnergyArray[$i]} -m 500 -l 100 -tmin 160 -tmax 220
 done
