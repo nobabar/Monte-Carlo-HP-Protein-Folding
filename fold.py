@@ -46,6 +46,8 @@ def main(args):
     print(f"Final lattice with energy of {lattice.calculate_energy()}")
     final_lattice.draw_grid()
 
+    final_lattice.protein.write_pdb("./results/final_lattice.pdb")
+
 
 if __name__ == "__main__":
     args = sys.argv[1:]
