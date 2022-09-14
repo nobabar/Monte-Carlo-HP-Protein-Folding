@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-from MCsearch import MCsearch
+from src.MCsearch import MCsearch
 
 
 def REMCsearch(

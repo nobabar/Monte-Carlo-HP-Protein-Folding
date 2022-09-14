@@ -9,7 +9,7 @@ from copy import deepcopy
 import math
 
 # local
-from residue import Residue
+from src.residue import Residue
 
 
 class Protein:

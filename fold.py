@@ -1,10 +1,10 @@
 import sys
 
-from protein import Protein
-from lattice import Lattice
-from MCsearch import MCsearch
-from REMCsearch import REMCsearch
-from parser import parse_args
+from src.protein import Protein
+from src.lattice import Lattice
+from src.MCsearch import MCsearch
+from src.REMCsearch import REMCsearch
+from src.parser import parse_args
 
 
 def main(args):
@@ -25,8 +25,7 @@ def main(args):
 
     # if sequence is not an HP sequence, convert it
     if sequence.strip("HP"):
-        sequence = "".join(
-            'H' if r in 'AILMFVPGWC' else 'P' for r in sequence)
+        sequence = "".join("H" if r in "AILMFVPGWC" else "P" for r in sequence)
     protein = Protein(sequence)
 
     lattice = Lattice(protein, args.initial_lattice)
@@ -46,7 +45,7 @@ def main(args):
     print(f"Final lattice with energy of {lattice.calculate_energy()}")
     final_lattice.draw_grid()
 
-    final_lattice.protein.write_pdb("./results/final_lattice.pdb")
+    final_lattice.protein.write_pdb("../results/final_lattice.pdb")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import copy
 import numpy as np
 
-from movement import Movement
+from src.movement import Movement
 
 
 def MCsearch(n_steps, temperature, lattice_input):
