@@ -1,0 +1,120 @@
+\documentclass[french]{article}
+
+% Page
+    \usepackage[a4paper,%
+            left=1in,right=1in,top=1in,bottom=1in]{geometry}
+    \usepackage{lscape}
+
+% Abstract
+    \usepackage{abstract} % Allows abstract customization
+    % Set the "Abstract" text to bold
+    \renewcommand{\abstractnamefont}{\normalfont\bfseries}
+    % Set the abstract itself to small italic text
+    \renewcommand{\abstracttextfont}{\normalfont\small\itshape} 
+
+% Title
+    \usepackage{titlesec} % Allows customization of titles
+    
+% Endnotes
+	% Uncomment this line if using endnotes "\endnote{}"
+	% \usepackage{endnotes}
+    
+% Headers from page 2 on
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \fancyhf{}
+    \usepackage{lastpage}
+
+% MACROS
+    % Define keywords macro command
+    \providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1}
+
+
+% MATH SUPPORT
+    % The amssymb package provides various useful mathematical symbols
+    \usepackage{amssymb}
+    % The amsthm package provides extended theorem environments
+    \usepackage{amsthm}
+    % The newtxmath package provides additional math symbol support
+    	% in Times New Roman symbols, etc.
+    \usepackage{newtxmath}
+
+% FONTS
+    \usepackage{microtype} % Slightly tweak font spacing for aesthetics
+    \usepackage[utf8]{inputenc}
+    \usepackage{newtxtext} % Makes default font Adobe Times New Roman
+    \usepackage[T1]{fontenc}
+    \usepackage{rotating}
+    \usepackage{babel}
+  
+% LINES
+	% Spacing
+	\usepackage{setspace} % See \doublespacing command at the top of content.tex
+    % Numbering
+    \usepackage{lineno,xcolor} 	% See \linenumbers at the top of content.tex
+
+% COMMENTS
+	\usepackage[colorinlistoftodos]{todonotes} % allows margin comments
+    % See examples in content.tex, and here for manual: 
+    % http://www.ctan.org/pkg/todonotes
+	\usepackage{soul} % allows for highlighting
+
+% APPENDIX
+    \usepackage[toc,page,title,titletoc,header]{appendix} % pour les annexes
+    \renewcommand{\appendixtocname}{Appendices} % indique le nom de la table des annexes dans la toc
+    \renewcommand{\appendixpagename}{Appendices} % Nom du titre de la page des annexes
+
+% CODE
+    \usepackage{tcolorbox}
+    \usepackage{xcolor}
+    \newcommand{\reducedstrut}{\vrule width 0pt height .9\ht\strutbox depth .9\dp\strutbox\relax}
+    \usepackage{minted}
+
+% SEQUENCES
+    \usepackage{texshade}
+    \usepackage{booktabs, colortbl}
+
+% GRAPHICS
+    \usepackage{svg}
+    \usepackage{graphicx} % More advanced figure inclusion
+    \usepackage{float} % For specifying table/figure locations, i.e. [ht!]
+    
+    % The printlen command allows the user to print the exact text width or height.
+    % This is useful, when trying to create graphics (outside of LaTeX, of course)
+    % with the optimal dimensions. See here for usage: http://www.ctan.org/pkg/printlen
+    \usepackage{printlen}
+    \usepackage{tikz}
+    \usepackage{caption}
+
+% TABLES
+    \usepackage{pgfplotstable}
+    \pgfplotstableset{
+begin table=\begin{longtable},
+end table=\end{longtable},
+}
+    \pgfplotsset{compat=1.17}
+    \usepackage{longtable} % For long tables that span multiple pages
+    \newcommand{\sym}[1]{\rlap{#1}}% For symbols like *** in tables
+    \usepackage{tabularx} % Allows advanced table features
+    \newcolumntype{M}{>{\centering\arraybackslash}m{4.4em}}
+    \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+    \newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+    \newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+    \usepackage{relsize} % Allows precise adjustment of font size,
+    	%useful for fitting tables to page width
+    \usepackage{multirow}
+    \usepackage{booktabs}
+    
+
+% REFERENCES
+    \usepackage{cite}
+	\usepackage{hyperref} % For hyperlinks in the PDF
+	\hypersetup{
+	colorlinks=true,
+	linkcolor=black,
+	citecolor=black,
+    urlcolor=blue,
+    }
+	\usepackage{chicago}
+
+    
