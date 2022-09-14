@@ -29,10 +29,12 @@ def main(args):
     protein = Protein(sequence)
 
     lattice = Lattice(protein, args.initial_lattice)
-    del args.initial_lattice
 
-    print(f"Initial lattice with energy of {lattice.calculate_energy()}")
-    lattice.draw_grid()
+    if args.initial_lattice == "random":
+        print(f"Initial lattice with energy of {lattice.calculate_energy()}")
+        lattice.draw_grid()
+
+    del args.initial_lattice
 
     sub_command = args.subparser_name
     del args.subparser_name
@@ -45,7 +47,7 @@ def main(args):
     print(f"Final lattice with energy of {lattice.calculate_energy()}")
     final_lattice.draw_grid()
 
-    final_lattice.protein.write_pdb("../results/final_lattice.pdb")
+    # final_lattice.protein.write_pdb("../results/final_lattice.pdb")
 
 
 if __name__ == "__main__":
