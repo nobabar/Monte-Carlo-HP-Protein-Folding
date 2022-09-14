@@ -4,7 +4,7 @@
 
 Les méthodes de repliement de protéines à partir de leur séquence s'appuient sur la minimisation d'une fonction d'énergie. Les protéines sont des molécules complexes et leur repliement l'est encore plus, c'est pourquoi nous supposons que des perturbations thermiques appliquée à une protéine l'amèneront vers un minimum local d'énergie. Les processus de repliement des protéines in vivo sont guidés, c'est pourquoi nous pouvons imaginer un paysage énergétique en entonnoir contenant un minimum global significatif. Beaucoup de facteurs agissent sur ce paysage énergétique mais nous n'en considérerons ici qu'un. Le modèle HP permet de réduire la complexité des protéines en considérant uniquement le cas de résidus hydrophobiques ou polaires. Ainsi l'objectif sera d'augmenter les interactions entre résidus hydrophobiques.
 
-Afin de minimiser l'énergie l'approche la plus courante est l'utilisation d'un algorithme de Monte Carlo. Cet algorithme suit une descente de gradient mais peut, selon une probabilité, aller à contre-sens. Cela permet ainsi d'échapper aux minima locaux afin d'augmenter les chances du trouver le minimum global.
+Afin de minimiser l'énergie l'approche la plus courante est l'utilisation d'un algorithme de Monte Carlo. Cet algorithme suit une descente de gradient mais peut, selon une probabilité, aller à contre-sens. Cela permet ainsi d'échapper aux minima locaux afin d'augmenter les chances du trouver le minimum global. 
 
 \section{Matériels and Méthodes}
 
@@ -16,7 +16,7 @@ Nous utiliserons le classement ci-suit:
     \item polaires : R N D E Q H K S T Y
 \end{itemize}
 
-Ces résidus seront placés sur une grille réduisant ainsi les coordonnées possibles. En plus de cela nous ne considérerons que le cas d'une grille en 2 dimensions. Chaque résidu peut avoir quatre voisins au maximum sur cette grille. L'énergie de conformation associée à cette grille correspond au nombre de contacts directs entre voisins topologique, c'est à dire entre résidus voisins n'étant pas consécutifs dans la séquence. Chaque contact aura une contribution négative de -1 à l'énergie totale.
+Ces résidus seront placés sur une grille réduisant ainsi les coordonnées possibles. En plus de cela nous ne considérerons que le cas d'une grille en 2 dimensions. Chaque résidu peut avoir quatre voisins au maximum sur cette grille. L'énergie de conformation associée à cette grille correspond au nombre de contacts directs entre résidus hydrophobes étant voisins topologique, c'est à dire entre résidus voisins n'étant pas consécutifs dans la séquence. Chaque contact aura une contribution négative de -1 à l'énergie totale. Cette simplification repose sur le fait que les protéines solubles ont tendance à cacher leurs résidus hydrophobes de l'environnement (souvent polaire) en les regroupant dans un noyau hydrophobe.
 
 L'algorithme de Monte Carlo s'applique sur une conformation initiale que l'on cherche à minimiser. Pour obtenir cette conformation initiale nous comparerons deux méthodes, un placement initial linéaire et un placement par marche aléatoire. L'algorithme consistera ensuite en une série d'itérations pendant lesquelles un mouvement pourra être appliqué sur un ou plusieurs résidus.
 
@@ -69,6 +69,8 @@ où $\Delta$ est le produit de la différence d'énergie et de la différence de
 
 où $\beta_i = \frac{1}{T_i \cdot K_b}$ est l'inverse de la température du réplica.
 
+L'implémentation de cet algorithme a été réalisée en python (3.10). Cela a permis une implémentation orientée objet à travers quatre classes principales, \texttt{Residue}, \texttt{Protein}, \texttt{Lattice} et \texttt{Movement}. Les deux algorithmes que sont celui de Monte Carlo et celui du Replica Exchange Monte Carlo ont été implémenté à travers deux fonctions. La compléxité et lenteur de ce programme vient en grande partie de la représentation des conformation, passant par des matrices, devant être copiées récursivement à chaque calcul de mouvement.
+
 \section{Résultats}
 
 La performance du programme limitant le nombre d'itération qu'il est possible de réaliser le repliements sont loin de ceux attendus et les énergies obtenues sont au maximum moitié moindre que celles attendues.
@@ -91,6 +93,8 @@ Toutes les simulations ci-dessus ont été obtenues avec les paramètres suivant
     \item MC : n-steps=5000, temperature=200
     \item REMC : n-replica=5, max-steps=500, local-steps=100, temperature-min=160, temperature-max=220
 \end{itemize}
+
+Les limites de cet algorithme sont notamment dues à la position initiale ne laissant que peu de liberté de mouvement. Nous pouvons suspecter des erreur dans l'implémentation des mouvements pull, qui permettrait pourtant une bien meilleur mobilité. 
 
 \section{Discussion}
 

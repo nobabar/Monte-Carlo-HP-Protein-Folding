@@ -4,6 +4,15 @@
     \appendixheaderon
     \singlespacing
 
+    \section{Structure du code}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=\textwidth]{figures/class_dependencies.png}
+        \caption{Structure des classes et fonctions principales}
+        \label{fig:class_dependencies}
+    \end{figure}
+
+    \section{Sorties des runs de benchmarking}
     \begin{verbatim}
 Running test case: HPHPPHHPHPPHPHHPPHPH with optimal energy: -9
 Running MC with parameters: n-steps=5000, temperature=200
@@ -73,30 +82,6 @@ Final lattice with energy of -1
 | P                    |
 |                      |
 +----------------------+
-\end{verbatim}
-
-\begin{verbatim}
-Running test case: PPPHHPPHHPPPPPHHHHHHHPPHHPPPPHHPPHPP with optimal energy: -14
-Running MC with parameters: n-steps=5000, temperature=200
-Final lattice with energy of -3
-+-------------------------+
-|                         |
-|          HHHH           |
-| PPPP    PHHHPPHH        |
-| PHHHHPPPP      PPPPH    |
-|                    H    |
-|                    PPH  |
-|                      PP |
-|                         |
-+-------------------------+
-Running REMC with parameters: n-replica=5, energy-cutoff=-14, max-steps=500, local-steps=100, temperature-min=160, temperature-max=220
-Final lattice with energy of -1
-+-----------------------------------+
-|                                   |
-|  PHHPPHHPPPPPHHHHHHHPPHHPPPPHHHPP |
-| PP                           PP   |
-|                                   |
-+-----------------------------------+
 \end{verbatim}
 
 \end{appendices}
