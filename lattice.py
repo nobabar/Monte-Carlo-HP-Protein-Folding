@@ -353,18 +353,16 @@ class Lattice():
         j_max = max(j_coords) + 2
         j_min = min(j_coords) - 1
 
-        for i in range((j_max - j_min)):
-            print(f"{i:^4}", end="")
-        print("")
+        print("+" + "-" * (j_max - j_min) + "+")
         for i in range(i_min, i_max):
-            print(f"{i-i_min:-<4}" + "+---" * (j_max - j_min - 1) + "+")
+            print("|", end="")
             for j in range(j_min, j_max):
                 if self.grid[i, j] is None:
-                    print("|   ", end="")
+                    print(" ", end="")
                 else:
-                    print("|" + f"{str(self.grid[i, j]):^3}", end="")
+                    print(str(self.grid[i, j]), end="")
             print("|")
-        print("+---" * (j_max - j_min) + "+")
+        print("+" + "-" * (j_max - j_min) + "+")
 
     def __deepcopy__(self, memo):
         cls = self.__class__
